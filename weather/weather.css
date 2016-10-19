@@ -1,0 +1,45 @@
+body{
+  color: black;
+  background-color: #0D343A;
+  font-size: 2vmin;
+}
+.container{
+  max-height: 100%;
+  overflow: auto;
+}
+.off{
+  background-color: white;
+  height:100%;
+  width: 70%;
+}
+.center{
+  text-align: center;
+  margin:auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+}
+.content{
+  width: 50%;
+  height: 70%;
+}
+.update{
+  color: white;
+  font-size: 2vmin;
+  margin: 4px;
+}
+#title{
+  font-size: 4vmin;
+}
+#condition{
+  margin: 4px;
+  height: auto;
+  width: 8vmin;
+}
+#temp{
+  display: inline-block;
+  margin-left: 10px;
+}

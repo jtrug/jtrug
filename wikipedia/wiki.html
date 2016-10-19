@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="wiki.css">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script>
+      function search(){
+        var query = document.getElementById("topic").value;
+        query = query.replace(" ","+");
+        var url = "https\://en.wikipedia.org/w/api.php\?action=query&callback=\?&format=json&list=search&utf8=1&srsearch="+query;
+        $("#stuff").attr("style","align-items:flex-start");
+        $("#test").attr("style","margin-top:7%");
+        $("#search").hide();
+        $("#random").hide();
+
+        $.getJSON( url ,function(json){
+          var results = json.query.search
+          for(var i = 9;i>=0;i--){
+            console.log(results[i].title);
+            var title = "<p class=\"title\">"+results[i].title+"</p>"
+            var desc = "<p class=\"desc\">"+results[i].snippet+"</p>"
+            var element = "<a href =\"http\://wikipedia.org/wiki/"+encodeURI(results[i].title)+"\"><div class=\"entry\"><div class=\"text\">"+title+desc+"</div></div></a>"
+            $("#search").after(element);
+          }
+        });
+      }
+    </script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+<div class="container">
+    <div class="center offset">
+      <div class="center results" id="stuff" style="align-items: center;">
+        <div class="test"id="test" style="">
+        <b style="font-size:4vmin">Wikipedia Search</b>
+        <br>
+        <form action="#" onsubmit="search()">
+        <input id="topic" type="search"><br>
+        </form>
+        <a href="http://en.wikipedia.org/wiki/Special:Random"><button type="button" id="random" class="btn btn-default mybutton">
+          Random
+        </button></a>
+        <button type="button" id ="search" class="btn btn-default mybutton" onclick="search()">
+          Search
+        </button>
+    </div></div>
+    </div>
+</div>
+  </body>
+</html>

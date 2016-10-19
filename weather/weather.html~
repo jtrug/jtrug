@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather API test</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="weather.css">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script>
+
+      function update(){
+        var link = "http\://api.openweathermap.org/data/2.5/weather\?zip="+document.getElementById("zip").value+",US&APPID=0cf344571e401cad8d56ce48440e4786";
+        $.getJSON(link,function(data){
+            var k = data.main.temp-273.15;
+            $("#temp").html(k.toFixed(2));
+            $("#info").html("&nbsp&nbsp"+data.name+","+data.sys.country+" "+data.weather[0].main+"<br>There are "+data.weather[0].description+"<br>Humidity"+data.main.humidity+"<br>Wind Speed:"+data.wind.speed);
+            var icon = "http://openweathermap.org/img/w/"+data.weather[0].icon+".png";
+            $("#condition").attr('src', icon);
+           });
+
+      }
+      function toggle(){
+        var units = document.getElementById('unit').innerHTML;
+        var temp = document.getElementById('temp').innerHTML;
+        if(units === "\xB0C"){
+        $("#unit").html("&degF");
+        temp = (temp*1.8)+32;
+        $("#temp").html(temp.toFixed(2));
+        }
+        else {
+          $("#unit").html("&degC");
+          temp = (temp-32)/1.8;
+          $("#temp").html(temp.toFixed(2));
+        }
+      }
+    </script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body onload="update()">
+    <div class="container">
+      <div class="off center">
+      <div class="content center">
+      <p id="title">Weather API test<p>
+
+      <div id="sum"><img id="condition" src="cloud.png"><p id="temp">50</p><p id="unit" style="display:inline-block">&degC</p><br><p id="info" style="display:inline-block">&nbsp&nbspFairmont</p><div>
+      <button type="button" class="btn btn-default btn-success update" onclick="update()" value="Update">
+        Update
+      </button>
+      <button type="button" class="btn btn-default btn-success update" onclick="toggle()">
+        Toggle Units
+      </button><br><br>
+      <input type="number" name="name" value="26554" id="zip">
+      </div>
+    </div>
+    </div>
+  </body>
+</html>
